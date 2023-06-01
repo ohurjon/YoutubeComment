@@ -1,6 +1,10 @@
 import googleapiclient.discovery
 from konlpy.tag import Kkma
+
+import data
 import key
+
+kkma = Kkma()
 
 
 def getData(videoID="", pageToken=""):
@@ -33,22 +37,27 @@ if __name__ == "__main__":
     elif len(link) == 11:
         id = link
     else:
-        print("에러")
         code = 400
-
-    print(id)
+        raise ValueError
 
     if code == 200:
-        data = {}
+        print("입력된 영상 id : " + id)
+        nouns = {}
 
         for i in getData(videoID=id)["items"]:
             comment = i["snippet"]["topLevelComment"]["snippet"]["textOriginal"]
-            kkma = Kkma()
+            # print(comment)
+
             for noun in kkma.nouns(comment):
-                if not data.keys().__contains__(noun):
-                    data[noun] = 1
-                else:
-                    data[noun] += 1
-        print(sorted(data.items(), key=lambda item: item[1], reverse=True))
+                # print(noun,end="_")
+                if len(noun) >= 2:
+                    if not nouns.keys().__contains__(noun):
+                        nouns[noun] = 1
+                    else:
+                        nouns[noun] += 1
 
+        for i in list(nouns.keys()):
+            if i in data.abuse:
+                del nouns[i]
 
+        print(sorted(nouns.items(), key=lambda item: item[1], reverse=True))
