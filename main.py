@@ -43,10 +43,12 @@ if __name__ == "__main__":
     if code == 200:
         print("입력된 영상 id : " + id)
         nouns = {}
+        dsa = getData(videoID=id)
 
-        for i in getData(videoID=id)["items"]:
+        #print(dsa)
+        for i in dsa["items"]:
             comment = i["snippet"]["topLevelComment"]["snippet"]["textOriginal"]
-            # print(comment)
+            #print(i)
 
             for noun in kkma.nouns(comment):
                 # print(noun,end="_")
