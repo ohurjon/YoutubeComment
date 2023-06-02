@@ -1,3 +1,4 @@
+
 import googleapiclient.discovery
 from konlpy.tag import Kkma
 
@@ -7,6 +8,7 @@ import key
 kkma = Kkma()
 
 
+# 대충 수정된 부분
 def getData(videoID="", pageToken=""):
     api_service_name = "youtube"
     api_version = "v3"
