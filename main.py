@@ -1,10 +1,9 @@
 import googleapiclient.discovery
-from konlpy.tag import Kkma
+from konlpy.tag._okt import Okt
 import key
 import re
 
-kkma = Kkma()
-max_comments = 500
+okt = Okt()
 
 def getData(max_comments, videoID="", pageToken=""):
     api_service_name = "youtube"
@@ -38,21 +37,27 @@ def getData(max_comments, videoID="", pageToken=""):
     return comments[:max_comments]
 
 def scoring_comments(data):
-    kkma = Kkma()
+    okt = Okt()
     count = {}
     count_x_likes = {}
 
     for comment, likes in data:
-        nouns = kkma.nouns(comment)
-        for noun in nouns:
-            if not count.keys().__contains__(noun):
-                count[noun] = 1
-            else:
-                count[noun] += 1
-            if not count_x_likes.keys().__contains__(noun):
-                count_x_likes[noun] = likes
-            else:
-                count_x_likes[noun] += likes
+        nouns = okt.nouns(comment)
+        if likes >= 5:
+            for noun in nouns:
+                if len(noun) <= 1:
+                    pass
+                else:
+                    if not count.keys().__contains__(noun):
+                        count[noun] = 1
+                    else:
+                        count[noun] += 1
+                    if not count_x_likes.keys().__contains__(noun):
+                        count_x_likes[noun] = likes
+                    else:
+                        count_x_likes[noun] += likes
+
+
 
     return count, count_x_likes
 
@@ -61,10 +66,10 @@ if __name__ == "__main__":
 
     code = 200
 
-    f = open("data.txt", 'w')
+    f = open("data/data.txt", 'w')
     f.close()
 
-    with open("path.txt", "r") as f:
+    with open("data/path.txt", "r") as f:
         links = [N.strip() for N in f.readlines()]
     f.close()
 
@@ -80,21 +85,21 @@ if __name__ == "__main__":
         print(id)
 
         if code == 200:
-
-            # max_comments = int(input("어느만큼 댓글을 수집하시겠습니까? : "))
             max_comments = 500
+            max_comments = int(input("어느만큼 댓글을 수집하시겠습니까? : "))
+
             data = getData(max_comments, videoID=id)
 
             sort_data = sorted(data, key=lambda x: x[1], reverse=True)
             print(sort_data,"\n\n")
 
-            count, count_x_likes = analyze_comments(data)
+            count, count_x_likes = scoring_comments(data)
 
             sort_count = sorted(count.items(), key=lambda item: item[1], reverse=True)
             sort_count_x_likes = sorted(count_x_likes.items(), key=lambda item: item[1], reverse=True)
 
             print(sort_count, "\n\n", sort_count_x_likes, "\n\n\n")
 
-            f = open("data.txt",'a')
-            f.write(f"{id} \n\n {sort_data} \n\n {sort_count} \n\n {sort_count_x_likes} \n\n\n")
+            f = open("data/data.txt",'a')
+            f.write(f"{id} \n\n {sort_count} \n\n {sort_count_x_likes} \n\n\n")
             f.close()
