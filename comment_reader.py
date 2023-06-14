@@ -9,10 +9,6 @@ def readComment(id, max_comment):
     sort_data = sorted(data, key=lambda x: x[1], reverse=True)
     print(sort_data, "\n\n")
 
-    f = open("data/data.txt", 'a')
-    f.write(f"{id}\n{data}")
-    f.close()
-
     return data
 
 
