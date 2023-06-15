@@ -10,16 +10,20 @@ def getIDListFromFile(path):
     file = open(path, "r")
 
     for link in file.readlines():
-        if link.startswith("http"):
-            links.append(link.split("=")[1].split("&")[0])
-        elif len(link) == 11:
-            links.append(link)
-        else:
-            raise ValueError
+        links.append(linkToId(link))
 
     file.close()
 
     return links
+
+
+def linkToId(link):
+    if link.startswith("http"):
+        link = link.split("=")[1].split("&")[0]
+    else:
+        raise ValueError
+
+    return link
 
 
 def readComment(videoID, maxComments, lineLike):
