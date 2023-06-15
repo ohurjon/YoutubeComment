@@ -4,16 +4,21 @@ import json
 okt = Okt()
 
 
-def addDataInFile(videoId, data):
+def getSavedData():
     file = open("src/data/data.txt", "r")
     allData = {}
     textData = file.read()
     if not textData == "":
         allData = json.loads(textData.replace("'", "\""))
+    file.close()
+    return allData
+
+
+def addDataInFile(videoId, data):
+    allData = getSavedData()
 
     if not allData.keys().__contains__(videoId):
         allData[videoId] = data
-    file.close()
 
     file = open("src/data/data.txt", "w")
     file.write(str(allData))
