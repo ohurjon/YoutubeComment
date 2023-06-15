@@ -53,4 +53,4 @@ def readComment(videoID, maxComments, lineLike):
         else:
             break
 
-    return comments
+    return len(comments), comments
