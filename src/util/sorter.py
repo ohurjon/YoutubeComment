@@ -5,7 +5,7 @@ okt = Okt()
 
 
 def getSavedData():
-    file = open("src/data/data.txt", "r")
+    file = open("data/data.txt", "r")
     allData = {}
     textData = file.read()
     if not textData == "":
@@ -20,7 +20,7 @@ def addDataInFile(videoId, data):
     if not allData.keys().__contains__(videoId):
         allData[videoId] = data
 
-    file = open("src/data/data.txt", "w")
+    file = open("data/data.txt", "w")
     file.write(str(allData))
     file.close()
 

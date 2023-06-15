@@ -3,8 +3,8 @@ import torch
 
 
 def analyzeTendencyComment(comments):
-    tokenizer = AutoTokenizer.from_pretrained("checkpoint-9500")
-    model = AutoModelForSequenceClassification.from_pretrained("checkpoint-9500")
+    tokenizer = AutoTokenizer.from_pretrained("../checkpoint-9500")
+    model = AutoModelForSequenceClassification.from_pretrained("../checkpoint-9500")
 
     result = []
 

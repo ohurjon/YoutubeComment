@@ -26,7 +26,7 @@ def run():
     program = input("무슨 모드를 실행 하시겠습니까? : ")
 
     if program == "1":
-        idList = getIDListFromFile("src/data/path.txt")
+        idList = getIDListFromFile("data/path.txt")
 
         print("입력된 영상 리스트\n", idList)
 
