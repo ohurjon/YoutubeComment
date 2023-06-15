@@ -15,6 +15,7 @@ def run():
     print("2 : input 기반 영상 분석기 실행")
     print("3 : 분석된 영상 리스트")
     print("4 : 영상 단어 분석")
+    print("5 : 영상 긍정도 확인")
     print("0 : 종료")
     print()
     print()
@@ -36,7 +37,6 @@ def run():
             total, data = readComment(videoId, max_comments, like)
             print("가져온 댓글 입니다\n", data)
 
-
             percent, data = analyzeTendencyComment(data)
             print("긍 부정 퍼센트\n", percent)
             print("긍 부정이 발린 댓글\n", data)
@@ -47,7 +47,7 @@ def run():
             data = sortComment(data)
             print("정렬 된 댓글\n", data)
 
-            addDataInFile(videoId, {"total":total,"percent": percent, "nouns_size": size, "nouns": data})
+            addDataInFile(videoId, {"total": total, "percent": percent, "nouns_size": size, "nouns": data})
         input("\n\n\n계속 하실려면 아무거나 입력해주세요.")
     elif program == "2":
         videoId = linkToId(input("영상 링크나 id를 입력 해주세요. : "))
@@ -78,8 +78,27 @@ def run():
         input("\n\n\n계속 하실려면 아무거나 입력해주세요.")
     elif program == "4":
         print("\n\n\n현재 저장된 영상 리스트")
-        print(tuple(getSavedData().keys()))
-        input("조사를 할 영상 아이디를 입력해주세요")
+        dicts = getSavedData()
+        ids = tuple(dicts.keys())
+        for i in range(0, len(ids)):
+            print(i, ":", ids[i])
+
+        id = int(input("조사를 할 영상 아이디를 선택해주세요 : "))
+
+        if id in range(0, len(ids)):
+            videoID = ids[id]
+            nouns = dicts[videoID]["nouns"]
+            print(tuple(nouns.keys()))
+            noun = input("조사 할 단어를 입력해주세요. : ")
+            if noun in nouns:
+                for comment in nouns[noun]["comments"]:
+                    print(comment["content"],comment["score"])
+                print("전체 스코어", nouns[noun]["score"])
+            input("\n\n\n계속 하실려면 아무거나 입력해주세요.")
+        else:
+            print("존재 하지 않는 아이디 입니다.")
+
+
     else:
         return 0
 
