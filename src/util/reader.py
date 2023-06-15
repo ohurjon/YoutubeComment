@@ -46,7 +46,8 @@ def readComment(videoID, maxComments, lineLike):
 
             if like_count > lineLike:
                 comment = ' '.join(re.findall(r'[0-9\u3131-\u3163\uac00-\ud7a3]+', comment))
-                comments.append((comment, like_count))
+                if len(comment) > 0:
+                    comments.append((comment, like_count))
 
         if 'nextPageToken' in response:
             pageToken = response['nextPageToken']
