@@ -50,14 +50,14 @@ def run():
             addDataInFile(videoId, {"total": total, "percent": percent, "nouns_size": size, "nouns": data})
 
             drawCircleGraph(percent)
-        input("\n\n\n계속 하실려면 아무거나 입력해주세요.")
+        input("\n\n\n계속 하시 려면 아무 거나 입력해 주세요.")
     elif program == "2":
-        videoId = linkToId(input("영상 링크나 id를 입력 해주세요. : "))
+        videoId = linkToId(input("영상 링크나 id를 입력해 주세요. : "))
 
         print("입력된 영상 id", videoId)
 
-        max_comments = int(input("어느 만큼의 댓글을 수집하시겠습니까? : "))
-        like = int(input("좋아요 얼마 이상의 댓글을 수집하시겠습니까? : "))
+        max_comments = int(input("어느 만큼의 댓글을 수집 하시겠습니까? : "))
+        like = int(input("좋아요 얼마 이상의 댓글을 수집 하시겠습니까? : "))
 
         data = readComment(videoId, max_comments, like)
         print("가져온 댓글 입니다\n", data)
