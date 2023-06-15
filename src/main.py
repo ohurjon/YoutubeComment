@@ -1,7 +1,7 @@
 from util.reader import readComment, getIDListFromFile, linkToId
 from util.sorter import sortComment, labellingComments, addDataInFile, getSavedData
 from util.analyzer import analyzeTendencyComment
-
+from util.draw import drawCircleGraph
 
 def run():
     print("\r\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n")
@@ -48,6 +48,8 @@ def run():
             print("정렬 된 댓글\n", data)
 
             addDataInFile(videoId, {"total": total, "percent": percent, "nouns_size": size, "nouns": data})
+
+            drawCircleGraph(percent)
         input("\n\n\n계속 하실려면 아무거나 입력해주세요.")
     elif program == "2":
         videoId = linkToId(input("영상 링크나 id를 입력 해주세요. : "))
@@ -71,6 +73,8 @@ def run():
         print("정렬 된 댓글\n", data)
 
         addDataInFile(videoId, {"percent": percent, "nouns": data})
+
+        drawCircleGraph(percent)
         input("\n\n\n계속 하실려면 아무거나 입력해주세요.")
     elif program == "3":
         print("\n\n\n현재 저장된 영상 리스트")
