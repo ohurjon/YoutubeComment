@@ -26,7 +26,7 @@ def analyzeTendencyComment(comments):
         else:
             sentiment = -1
 
-        result.append((sentence, number, sentiment))
+        result.append((sentence, number*sentiment))
 
     percent = positive/len(comments)
 

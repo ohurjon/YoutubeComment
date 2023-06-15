@@ -1,23 +1,40 @@
 from konlpy.tag import Okt
+import json
 
 okt = Okt()
+
+
+def addDataInFile(videoId, data):
+    file = open("src/data/data.txt", "r")
+    allData = {}
+    textData = file.read()
+    if not textData == "":
+        allData = json.loads(textData.replace("'", "\""))
+
+    if not allData.keys().__contains__(videoId):
+        allData[videoId] = data
+    file.close()
+
+    file = open("src/data/data.txt", "w")
+    file.write(str(allData))
+    file.close()
 
 
 def labellingComments(data):
     nouns = {}
 
-    for comment, likes, sentiment in data:
+    for comment, score in data:
         commentNouns = okt.nouns(comment)
         for noun in commentNouns:
             if len(noun) > 1:
                 if not nouns.keys().__contains__(noun):
                     nouns[noun] = {
                         "comments": [],
-                        "score": likes * sentiment
+                        "score": score
                     }
                 else:
-                    nouns[noun]["score"] += likes * sentiment
-                nouns[noun]["comments"].append((comment, likes * sentiment))
+                    nouns[noun]["score"] += score
+                nouns[noun]["comments"].append({"content": comment, "score": score})
     return nouns
 
 

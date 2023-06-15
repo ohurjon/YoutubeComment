@@ -1,10 +1,8 @@
 from util.reader import readComment, getIDListFromFile
-from util.sorter import sortComment, labellingComments
+from util.sorter import sortComment, labellingComments, addDataInFile
 from util.analyzer import analyzeTendencyComment
 
 if __name__ == "__main__":
-
-    code = 200
 
     idList = getIDListFromFile("src/data/path.txt")
 
@@ -27,6 +25,4 @@ if __name__ == "__main__":
         data = sortComment(data)
         print("정렬 된 댓글\n", data)
 
-
-
-
+        addDataInFile(videoId, {"percent": percent, "nouns": data})
